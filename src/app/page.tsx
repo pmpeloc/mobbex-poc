@@ -1,7 +1,38 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
+
+import Image from 'next/image';
+import styles from './page.module.css';
+
+const options = {
+  id: 'CHK:JV72OW6EURNZZVBUZD',
+  type: 'checkout',
+  onResult: (data: any) => {
+    // OnResult es llamado cuando se toca el Botón Cerrar
+    // @ts-ignore
+    window.MobbexEmbed.close();
+  },
+  onPayment: (data: any) => {
+    console.info('Payment: ', data);
+  },
+  onOpen: () => {
+    console.info('Pago iniciado.');
+  },
+  onClose: (cancelled: any) => {
+    console.info(`${cancelled ? 'Cancelado' : 'Cerrado'}`);
+  },
+  onError: (error: any) => {
+    console.error('ERROR: ', error);
+  },
+};
 
 export default function Home() {
+  function initMobbexPayment() {
+    // @ts-ignore
+    const mbbxButton = window.MobbexEmbed.init(options);
+
+    mbbxButton.open();
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -9,16 +40,17 @@ export default function Home() {
           Get started by editing&nbsp;
           <code className={styles.code}>src/app/page.tsx</code>
         </p>
+        <button onClick={initMobbexPayment}>PAGAR</button>
+        <div id='mbbx-container'></div>
         <div>
           <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+            href='https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
+            target='_blank'
+            rel='noopener noreferrer'>
             By{' '}
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
+              src='/vercel.svg'
+              alt='Vercel Logo'
               className={styles.vercelLogo}
               width={100}
               height={24}
@@ -31,8 +63,8 @@ export default function Home() {
       <div className={styles.center}>
         <Image
           className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
+          src='/next.svg'
+          alt='Next.js Logo'
           width={180}
           height={37}
           priority
@@ -41,11 +73,10 @@ export default function Home() {
 
       <div className={styles.grid}>
         <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href='https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
           className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          target='_blank'
+          rel='noopener noreferrer'>
           <h2>
             Docs <span>-&gt;</span>
           </h2>
@@ -53,11 +84,10 @@ export default function Home() {
         </a>
 
         <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
           className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          target='_blank'
+          rel='noopener noreferrer'>
           <h2>
             Learn <span>-&gt;</span>
           </h2>
@@ -65,11 +95,10 @@ export default function Home() {
         </a>
 
         <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
           className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          target='_blank'
+          rel='noopener noreferrer'>
           <h2>
             Templates <span>-&gt;</span>
           </h2>
@@ -77,11 +106,10 @@ export default function Home() {
         </a>
 
         <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
+          href='https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app'
           className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+          target='_blank'
+          rel='noopener noreferrer'>
           <h2>
             Deploy <span>-&gt;</span>
           </h2>
@@ -91,5 +119,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
